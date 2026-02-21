@@ -11,7 +11,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("vaglimatias@gmail.com");
 
-  // Traer jobs y candidato
+ 
   useEffect(() => {
     Promise.all([
       getJobs(),
