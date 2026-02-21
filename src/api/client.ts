@@ -24,6 +24,8 @@ export async function getCandidateByEmail(email: string): Promise<Candidate> {
 }
 
 export async function applyToJob(payload: Application): Promise<{ ok: boolean }> {
+  console.log("Applying with payload:", payload);
+  
   const response = await fetch(`${BASE_URL}/api/candidate/apply-to-job`, {
     method: "POST",
     headers: {
@@ -32,8 +34,12 @@ export async function applyToJob(payload: Application): Promise<{ ok: boolean }>
     body: JSON.stringify(payload),
   });
 
+  console.log("Response status:", response.status);
+  
   if (!response.ok) {
-    throw new Error("Failed to apply to job");
+    const errorText = await response.text();
+    console.error("API Error:", errorText);
+    throw new Error(`Failed to apply: ${response.status} - ${errorText}`);
   }
 
   return response.json();

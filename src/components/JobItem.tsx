@@ -20,9 +20,14 @@ async function handleSubmit() {
     return;
   }
 
- 
   if (!repoUrl.includes("github.com")) {
     setMessage("Please enter a valid GitHub repository URL");
+    return;
+  }
+
+  // Validar que tengamos todos los datos necesarios
+  if (!candidate.uuid || !candidate.candidateId || !candidate.applicationId || !job.id) {
+    setMessage("Missing candidate or job data. Please refresh the page.");
     return;
   }
 
@@ -30,16 +35,27 @@ async function handleSubmit() {
     setSubmitting(true);
     setMessage(null);
 
+    console.log("Submitting application:", {
+      uuid: candidate.uuid,
+      jobId: job.id,
+      candidateId: candidate.candidateId,
+      applicationId: candidate.applicationId,
+      repoUrl,
+    });
+
     await applyToJob({
       uuid: candidate.uuid,
       jobId: job.id,
       candidateId: candidate.candidateId,
+      applicationId: candidate.applicationId,
       repoUrl,
     });
 
     setMessage("Application sent successfully!");
   } catch (error) {
-    setMessage("Failed to apply.");
+    console.error("Application error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to apply";
+    setMessage(`Error: ${errorMessage}`);
   } finally {
     setSubmitting(false);
   }
