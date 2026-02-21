@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# Candidate Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Aplicación React para postularse a posiciones de trabajo mediante una API REST
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-18-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Vite](https://img.shields.io/badge/Vite-Latest-green)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Características
 
-## React Compiler
+-  **Lista de posiciones** - Visualización de trabajos disponibles
+-  **Gestión de candidatos** - Obtención de datos por email  
+-  **Postulaciones** - Envío de aplicaciones con validación
+-  **Estados dinámicos** - Loading, errores y mensajes de éxito
+-  **UI** - Interfaz limpia y responsive
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Inicio rápido
 
-## Expanding the ESLint configuration
+```bash
+# Clonar repositorio
+git clone <repo-url>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Instalar dependencias
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Ejecutar en desarrollo
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Build para producción  
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Stack tecnológico
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Tecnología | Uso |
+|------------|-----|
+| **React 18** | Biblioteca de UI con hooks |
+| **TypeScript** | Tipado estático y mejor DX |
+| **Vite** | Build tool y dev server rápido |
+| **ESLint** | Linting y calidad de código |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## API Integration
+
+**Base URL:** `https://botfilter-h5ddh6dye8exb7ha.centralus-01.azurewebsites.net`
+
+### Endpoints
+
+```bash
+GET  /api/candidate/get-by-email    # Obtener datos del candidato
+GET  /api/jobs/get-list            # Lista de posiciones
+POST /api/candidate/apply-to-job   # Enviar postulación
 ```
+
+## Estructura del proyecto
+
+```
+src/
+├── components/
+│   └── JobItem.tsx          # Componente de posición
+├── types/
+│   ├── job.interface.ts     # Tipos de trabajos
+│   ├── candidate.interface.ts # Tipos de candidato  
+│   └── application.interface.ts # Tipos de postulación
+├── api/
+│   └── client.ts            # Cliente API
+├── App.tsx                  # Componente principal
+└── main.tsx                 # Entry point
+```
+
+##  Funcionalidades
+
+- **Validación de formularios** - URLs de GitHub requeridas
+- **Manejo de errores** - Feedback claro al usuario
+- **Estados de carga** - UX fluida durante requests
+- **Tipos seguros** - TypeScript en toda la app
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ using React & TypeScript</sub>
+</div>
+
+```
+
