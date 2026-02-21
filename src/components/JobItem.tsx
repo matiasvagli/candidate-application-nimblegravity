@@ -15,7 +15,7 @@ export function JobItem({ job, candidate }: JobItemProps) {
 const [message, setMessage] = useState<string | null>(null);
 
 async function handleSubmit() {
-  if (!repoUrl) {
+  if (!repoUrl.trim()) {
     setMessage("Repo URL is required");
     return;
   }
@@ -35,14 +35,6 @@ async function handleSubmit() {
     setSubmitting(true);
     setMessage(null);
 
-    console.log("Submitting application:", {
-      uuid: candidate.uuid,
-      jobId: job.id,
-      candidateId: candidate.candidateId,
-      applicationId: candidate.applicationId,
-      repoUrl,
-    });
-
     await applyToJob({
       uuid: candidate.uuid,
       jobId: job.id,
@@ -52,8 +44,8 @@ async function handleSubmit() {
     });
 
     setMessage("Application sent successfully!");
+    setRepoUrl("");
   } catch (error) {
-    console.error("Application error:", error);
     const errorMessage = error instanceof Error ? error.message : "Failed to apply";
     setMessage(`Error: ${errorMessage}`);
   } finally {
@@ -89,14 +81,14 @@ async function handleSubmit() {
 
       <button 
         onClick={handleSubmit} 
-        disabled={submitting}
+        disabled={submitting || !repoUrl.trim()}
         style={{
-          backgroundColor: submitting ? "#ccc" : "#007acc",
+          backgroundColor: (submitting || !repoUrl.trim()) ? "#ccc" : "#007acc",
           color: "white",
           border: "none",
           padding: "10px 20px",
           borderRadius: "4px",
-          cursor: submitting ? "not-allowed" : "pointer",
+          cursor: (submitting || !repoUrl.trim()) ? "not-allowed" : "pointer",
           fontSize: "14px",
           fontWeight: "bold"
         }}
